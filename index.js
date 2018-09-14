@@ -79,5 +79,6 @@ handlers.notFound = (data, callback) => {
 };
 
 const router = {
-    'ping' : handlers.ping
+    'ping' : handlers.ping,
+    'hello' : handlers.hello
 };
