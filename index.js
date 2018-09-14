@@ -1,25 +1,25 @@
 const http = require('http');
-//const https = require('https');
+const https = require('https');
 const url = require('url');
 const fs = require('fs');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 
-// const httpsServerOptions = {
-//     'key' : fs.readFileSync('./cert/key.pem'),
-//     'cert' : fs.readFileSync('./cert/cert.pem')
-// };
+const httpsServerOptions = {
+    'key' : fs.readFileSync('./cert/key.pem'),
+    'cert' : fs.readFileSync('./cert/cert.pem')
+};
 
-// const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
-//     unifiedServer(req, res);
-// });
+const httpsServer = https.createServer(httpsServerOptions, (req, res) => {
+    unifiedServer(req, res);
+});
 
-// httpsServer.listen(config.httpsPort, (err) => {
-//     if (err) {
-//         return console.error(err);
-//     }
-//     console.log(`Listineing on port ${config.httpsPort}`);
-// });
+httpsServer.listen(config.httpsPort, (err) => {
+    if (err) {
+        return console.error(err);
+    }
+    console.log(`Listineing on port ${config.httpsPort}`);
+});
 
 const httpServer = http.createServer((req, res) => {
     unifiedServer(req, res);
@@ -69,6 +69,9 @@ const handlers = {};
 
 handlers.ping = (data, callback) => {
     callback(200);
+}
+handlers.hello = (data, callback) => {
+    callback(200, {'msg' : 'Welcome to this site!'})
 }
 
 handlers.notFound = (data, callback) => {
